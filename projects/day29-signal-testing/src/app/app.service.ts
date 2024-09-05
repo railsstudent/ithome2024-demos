@@ -19,4 +19,8 @@ export class AppService {
   reset() {
     this.#counter.set(0);
   }
+
+  log() {
+    console.log('Value', this.#counter());
+  }
 }

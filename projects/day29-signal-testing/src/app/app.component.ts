@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, effect, inject } from '@angular/core';
 import { AppService } from './app.service';
 
 @Component({
@@ -21,6 +21,10 @@ export class AppComponent {
   title = 'day29-signal-testing';
 
   appService = inject(AppService);
+
+  constructor() {
+    effect(() => this.appService.log());
+  }
 
   increase(num = 1) {
     this.appService.increase(num);
