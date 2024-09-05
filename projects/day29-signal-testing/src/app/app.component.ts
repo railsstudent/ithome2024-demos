@@ -7,12 +7,12 @@ import { AppService } from './app.service';
   template: `
     <h1>Hello, {{ title }}</h1>
     <div>
-      <p>Value: {{ this.appService.value() }}</p>
+      <p id="value">Value: {{ this.appService.value() }}</p>
       <button id="increase" (click)="increase(1)">Add 1</button>
       <button id="increase2" (click)="increase(2)">Add 2</button>
       <button id="decrease" (click)="decrease(1)">Decrease</button>
       <button id="decrease2" (click)="decrease(2)">Decrease 2</button>
-      <button id="reset">Reset</button>  
+      <button id="reset" (click)="reset()">Reset</button>  
     </div>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,

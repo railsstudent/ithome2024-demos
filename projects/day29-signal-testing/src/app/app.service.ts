@@ -21,6 +21,6 @@ export class AppService {
   }
 
   log() {
-    console.log('Value', this.#counter());
+    console.log(this.value());
   }
 }
