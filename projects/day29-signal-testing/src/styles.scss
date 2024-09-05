@@ -1,1 +1,18 @@
 /* You can add global styles to this file, and also import other style files */
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    padding: 1rem;
+    width: 100vw;
+    min-height: 100%;
+}
+
+button {
+    margin-right: 0.25rem;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+}
