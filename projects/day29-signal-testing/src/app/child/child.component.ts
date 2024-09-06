@@ -5,9 +5,9 @@ import { ChangeDetectionStrategy, Component, computed, input } from '@angular/co
   standalone: true,
   imports: [],
   template: `
-    <p>child works!</p>
-    <p>Count: {{ count() }}</p>
-    <p>Double: {{ double() }}</p>
+    <p>Child works!</p>
+    <p data-testId="count">Count: {{ count() }}</p>
+    <p data-testId="double">Double: {{ double() }}</p>
   `,
   styles: ``,
   changeDetection: ChangeDetectionStrategy.OnPush
