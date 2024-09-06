@@ -18,22 +18,21 @@ describe('AppComponent', () => {
   });
 
   it('should increase the counter by 1', () => {  
-    const value: HTMLDivElement = fixture.debugElement.query(
+    const value: HTMLParagraphElement = fixture.debugElement.query(
       By.css('[id="value"]'),
     ).nativeElement;
     expect(value.textContent).toBe('Value: 0');
   
     const key = '[id="increase"]';
-    fixture.debugElement
-      .query(By.css(key))
-      .nativeElement.click();
+    const el = fixture.debugElement.query(By.css(key));      
+    el.nativeElement.click();
     fixture.detectChanges();
   
     expect(value.textContent).toBe('Value: 1');
   });
 
   it('should increase the counter by 2 after 2 button clicks', () => {  
-    const value: HTMLDivElement = fixture.debugElement.query(
+    const value: HTMLParagraphElement = fixture.debugElement.query(
       By.css('[id="value"]'),
     ).nativeElement;
     expect(value.textContent).toBe('Value: 0');
@@ -52,7 +51,7 @@ describe('AppComponent', () => {
   });
 
   it('should decrease the counter by 1 after a button click', () => {  
-    const value: HTMLDivElement = fixture.debugElement.query(
+    const value: HTMLParagraphElement = fixture.debugElement.query(
       By.css('[id="value"]'),
     ).nativeElement;
     expect(value.textContent).toBe('Value: 0');
@@ -65,7 +64,7 @@ describe('AppComponent', () => {
   });
 
   it('should decrease the counter by 2 after 2 button clicks', () => {
-    const value: HTMLDivElement = fixture.debugElement.query(
+    const value: HTMLParagraphElement = fixture.debugElement.query(
       By.css('[id="value"]'),
     ).nativeElement;
     expect(value.textContent).toBe('Value: 0');
@@ -84,7 +83,7 @@ describe('AppComponent', () => {
   });
 
   it('should increase the counter by 2', () => {  
-    const value: HTMLDivElement = fixture.debugElement.query(
+    const value: HTMLParagraphElement = fixture.debugElement.query(
       By.css('[id="value"]'),
     ).nativeElement;
     expect(value.textContent).toBe('Value: 0');
@@ -97,7 +96,7 @@ describe('AppComponent', () => {
   });
 
   it('should decrease the counter by 2', () => {
-    const value: HTMLDivElement = fixture.debugElement.query(
+    const value: HTMLParagraphElement = fixture.debugElement.query(
       By.css('[id="value"]'),
     ).nativeElement;
     expect(value.textContent).toBe('Value: 0');
@@ -139,7 +138,7 @@ describe('AppComponent', () => {
   // });
 
   it('should reset the counter to 0', () => {
-    const value: HTMLDivElement = fixture.debugElement.query(
+    const value: HTMLParagraphElement = fixture.debugElement.query(
       By.css('[id="value"]'),
     ).nativeElement;
     expect(value.textContent).toBe('Value: 0');
@@ -165,7 +164,7 @@ describe('AppComponent', () => {
   });
 
   it('should update the child component', () => {
-    const value: HTMLDivElement = fixture.debugElement.query(
+    const value: HTMLParagraphElement = fixture.debugElement.query(
       By.css('[id="value"]'),
     ).nativeElement;
     expect(value.textContent).toBe('Value: 0');

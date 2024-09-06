@@ -22,11 +22,11 @@ describe('ChildComponent', () => {
   });
 
   it('should update the signal input', () => {
-    const count: HTMLDivElement = fixture.debugElement
+    const count: HTMLParagraphElement = fixture.debugElement
       .query(By.css('[data-testId="count"]')).nativeElement;
     expect(count.textContent).toBe('Count: 0');
   
-    const double: HTMLDivElement = fixture.debugElement
+    const double: HTMLParagraphElement = fixture.debugElement
       .query(By.css('[data-testId="double"]')).nativeElement;
     expect(double.textContent).toBe('Double: 0');
 
