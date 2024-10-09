@@ -189,6 +189,105 @@
           }
         }
       }
+    },
+    "day33-toSignal-injector-property": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss",
+          "changeDetection": "OnPush",
+          "inlineStyle": true,
+          "inlineTemplate": true,
+          "skipTests": true
+        }
+      },
+      "root": "projects/day33-to-signal-injector-property",
+      "sourceRoot": "projects/day33-to-signal-injector-property/src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:application",
+          "options": {
+            "outputPath": "dist/day33-to-signal-injector-property",
+            "index": "projects/day33-to-signal-injector-property/src/index.html",
+            "browser": "projects/day33-to-signal-injector-property/src/main.ts",
+            "polyfills": [
+              "zone.js"
+            ],
+            "tsConfig": "projects/day33-to-signal-injector-property/tsconfig.app.json",
+            "inlineStyleLanguage": "scss",
+            "assets": [
+              {
+                "glob": "**/*",
+                "input": "projects/day33-to-signal-injector-property/public"
+              }
+            ],
+            "styles": [
+              "projects/day33-to-signal-injector-property/src/styles.scss"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kB",
+                  "maximumError": "1MB"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "2kB",
+                  "maximumError": "4kB"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "development": {
+              "optimization": false,
+              "extractLicenses": false,
+              "sourceMap": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "configurations": {
+            "production": {
+              "buildTarget": "day33-toSignal-injector-property:build:production"
+            },
+            "development": {
+              "buildTarget": "day33-toSignal-injector-property:build:development"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "polyfills": [
+              "zone.js",
+              "zone.js/testing"
+            ],
+            "tsConfig": "projects/day33-to-signal-injector-property/tsconfig.spec.json",
+            "inlineStyleLanguage": "scss",
+            "assets": [
+              {
+                "glob": "**/*",
+                "input": "projects/day33-to-signal-injector-property/public"
+              }
+            ],
+            "styles": [
+              "projects/day33-to-signal-injector-property/src/styles.scss"
+            ],
+            "scripts": []
+          }
+        }
+      }
     }
   }
 }
