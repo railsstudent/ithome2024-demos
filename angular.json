@@ -211,9 +211,7 @@
             "outputPath": "dist/day33-to-signal-injector-property",
             "index": "projects/day33-to-signal-injector-property/src/index.html",
             "browser": "projects/day33-to-signal-injector-property/src/main.ts",
-            "polyfills": [
-              "zone.js"
-            ],
+            "polyfills": [],
             "tsConfig": "projects/day33-to-signal-injector-property/tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": [
@@ -269,10 +267,7 @@
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "polyfills": [
-              "zone.js",
-              "zone.js/testing"
-            ],
+            "polyfills": [],
             "tsConfig": "projects/day33-to-signal-injector-property/tsconfig.spec.json",
             "inlineStyleLanguage": "scss",
             "assets": [
