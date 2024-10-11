@@ -6,7 +6,8 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "serve:ssr:day34-to-signal-requiredSync-property": "node dist/day34-to-signal-required-sync-property/server/server.mjs"
   },
   "private": true,
   "dependencies": {
