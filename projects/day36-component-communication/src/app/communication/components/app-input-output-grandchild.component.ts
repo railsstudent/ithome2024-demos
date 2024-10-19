@@ -4,14 +4,7 @@ import { Feature } from "../types/feature.type";
 @Component({
   selector: 'app-input-output-grandchild',
   standalone: true,
-  template: `
-    <h3>Input/Output Grandchild Component</h3>
-    <div>
-      <p>Secret Value: {{ secretValue() }}</p>
-      <p>{{ toggleText() }}</p>
-      <button (click)="handleClicked()">Click Me!!!!</button>
-    </div>
-  `,
+  templateUrl: './grand-child.component.html',
   styles: `
     :host {
       display: block;
@@ -23,6 +16,7 @@ import { Feature } from "../types/feature.type";
 export default class AppInputOutputGrandchildComponent {
   secretValue = input.required<string>();
   toggleFeature = signal(false);
+  title = 'Input/Output Grandchild Component';
 
   toggleText = computed(() => {
     const click = this.toggleFeature() ? 'disable' : 'enable';

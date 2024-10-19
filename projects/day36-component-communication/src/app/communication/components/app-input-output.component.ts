@@ -7,7 +7,7 @@ import AppInputOutputGrandchildComponent from "./app-input-output-grandchild.com
   standalone: true,
   imports: [AppInputOutputGrandchildComponent],
   template: `
-    <h3>Input/Output Component</h3>
+    <h3>{{ title }}</h3>
     <div [class.enabled]="isEnabled()">
       <app-input-output-grandchild [secretValue]="secretValue()" (featureFlag)="handleClicked($event)" />
     </div>
@@ -18,6 +18,7 @@ export default class AppInputOutputComponent {
   secretValue = input.required<string>();
   isEnabled = signal(false);
   featureFlag = output<Feature>();
+  title = 'Input/Output Component';
 
   handleClicked(value: Feature) {
     this.isEnabled.set(value.isShown);

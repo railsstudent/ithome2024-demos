@@ -4,14 +4,7 @@ import { PROVIDE_INJECT_TOKEN } from "../provide-inject.constant";
 @Component({
   selector: 'app-provide-inject-grandchild',
   standalone: true,
-  template: `
-    <h3>Provide/Inject Grandchild Component</h3>
-    <div>
-      <p>Secret Value: {{ secretValue() }}</p>
-      <p>{{ toggleText() }}</p>
-      <button (click)="handleClicked()">Click Me!!!!</button>
-    </div>
-  `,
+  templateUrl: './grand-child.component.html',
   styles: `
     :host {
       display: block;
@@ -24,6 +17,7 @@ export default class AppProvideInjectGrandchildComponent {
   toggleFeature = signal(false);
   token = inject(PROVIDE_INJECT_TOKEN);
   secretValue = computed(() => this.token.secretValue());
+  title = 'Provide/Inject Grandchild Component';
 
   toggleText = computed(() => {
     const click = this.toggleFeature() ? 'disable' : 'enable';

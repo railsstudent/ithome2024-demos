@@ -19,8 +19,8 @@ export class SignalStateService implements FeatureFacade {
     return feature.isShown ? feature.name : '';
   });
 
-  setSecretValue(value: string): void {
-    patchState(this.#state, () => ({ secretValue: value }));
+  setSecretValue(secretValue: string): void {
+    patchState(this.#state, () => ({ secretValue }));
   }
   
   setFeature(feature: Feature | null): void {

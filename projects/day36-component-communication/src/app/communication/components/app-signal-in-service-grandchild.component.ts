@@ -4,14 +4,7 @@ import { CommunicationService } from "../services/communication.service";
 @Component({
   selector: 'app-signal-in-service-grandchild',
   standalone: true,
-  template: `
-    <h3>Signal in a Service Grandchild Component</h3>
-    <div>
-      <p>Secret Value: {{ communicationService.secretValue() }}</p>
-      <p>{{ toggleText() }}</p>
-      <button (click)="handleClicked()">Click Me!!!!</button>
-    </div>
-  `,
+  templateUrl: './grand-child.component.html',
   styles: `
     :host {
       display: block;
@@ -23,6 +16,8 @@ import { CommunicationService } from "../services/communication.service";
 export default class AppSignalInServiceGrandchildComponent {
   communicationService = inject(CommunicationService);
   toggleFeature = signal(false);
+  secretValue = this.communicationService.secretValue;
+  title = 'Signal in a Service Grandchild Component';
 
   toggleText = computed(() => {
     const click = this.toggleFeature() ? 'disable' : 'enable';

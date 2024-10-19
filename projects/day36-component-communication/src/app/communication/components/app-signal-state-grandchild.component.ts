@@ -4,14 +4,7 @@ import { SignalStateService } from "../services/signal-state.service";
 @Component({
   selector: 'app-signal-state-grandchild',
   standalone: true,
-  template: `
-    <h3>NgRx Signal State Grandchild Component</h3>
-    <div>
-      <p>Secret Value: {{ service.secretValue() }}</p>
-      <p>{{ toggleText() }}</p>
-      <button (click)="handleClicked()">Click Me!!!!</button>
-    </div>
-  `,
+  templateUrl: './grand-child.component.html',
   styles: `
     :host {
       display: block;
@@ -23,6 +16,8 @@ import { SignalStateService } from "../services/signal-state.service";
 export default class AppSignalStateGrandchildComponent {
   service = inject(SignalStateService);
   toggleFeature = signal(false);
+  secretValue = this.service.secretValue;
+  title = 'NgRx Signal State Grandchild Component';
 
   toggleText = computed(() => {
     const click = this.toggleFeature() ? 'disable' : 'enable';
