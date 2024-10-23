@@ -1,0 +1,7 @@
+<div>
+  <p>{{ title }}</p>
+  @for (entry of mapData(); track entry[0]) {
+    <p>{{ entry[0] }} - {{ entry[1] }}</p>
+  }
+  <p>Most Popular: {{ mostPopular() }}</p>
+</div>
