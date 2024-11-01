@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectionStrategy, Component, viewChild, viewChildren } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, computed, viewChild, viewChildren } from '@angular/core';
 import { SomeComponent } from './migrations/some.component';
 import { QueriesComponent } from './migrations/queries.component';
 
@@ -26,13 +26,13 @@ import { QueriesComponent } from './migrations/queries.component';
       <p #p>Paragraph 1b</p>
       <p #p>Paragraph 2b</p>
     </app-queries>
-    <p>ViewChildName: {{ viewChildName }}</p>
-    <p>numAComponents: {{ numAComponents }}</p>
+    <p>ViewChildName: {{ viewChildName() }}</p>
+    <p>numAComponents: {{ numAComponents() }}</p>
   `,
   styles: ``,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AppComponent implements AfterViewInit {
+export class AppComponent {
   title = 'Migrate to signals using ngxtension library';
   color = 'red';
   name = 'Hello World!!!!';
@@ -43,12 +43,7 @@ export class AppComponent implements AfterViewInit {
 
   readonly queries = viewChild.required(QueriesComponent);
   readonly aComponents = viewChildren('a');
-
-  viewChildName = '';
-  numAComponents = 0;
   
-  ngAfterViewInit(): void {
-    this.viewChildName = this.queries().name;  
-    this.numAComponents = this.aComponents().length;
-  }
+  viewChildName = computed(() => this.queries().name);
+  numAComponents = computed(() => this.aComponents().length);
 }
