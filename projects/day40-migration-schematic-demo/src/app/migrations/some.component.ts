@@ -1,4 +1,5 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import { outputFromObservable } from '@angular/core/rxjs-interop';
+import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BehaviorSubject, map } from 'rxjs';
 
@@ -9,8 +10,8 @@ import { BehaviorSubject, map } from 'rxjs';
   template: `
     <h2>Use Input and Output decorators</h2>
     <div>
-      <p>bgColor: {{ bgColor }}</p>
-      <p>name: {{ name }}</p>
+      <p>bgColor: {{ bgColor() }}</p>
+      <p>name: {{ name() }}</p>
       @let n = numSub.getValue();
       <p>num: {{ n }}</p>
       <div>
@@ -24,12 +25,12 @@ import { BehaviorSubject, map } from 'rxjs';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SomeComponent {
-  @Input({ required: true, alias: 'backgroundColor'}) bgColor!: string; 
-  @Input({ transform: (x: string) => x.toLocaleUpperCase() }) name: string = 'input decorator';
+  readonly bgColor = input.required<string>({ alias: "backgroundColor" }); 
+  readonly name = input<string, string>('input decorator', { transform: (x: string) => x.toLocaleUpperCase() });
 
-  @Output() triple = new EventEmitter<number>();
-  @Output('cube') powerXBy3 = new EventEmitter<number>();
+  readonly triple = output<number>();
+  readonly powerXBy3 = output<number>({ alias: 'cube' });
 
   numSub = new BehaviorSubject<number>(2);  
-  @Output() double = this.numSub.pipe(map((n) => n * 2));
+  double = outputFromObservable(this.numSub.pipe(map((n) => n * 2)));
 }

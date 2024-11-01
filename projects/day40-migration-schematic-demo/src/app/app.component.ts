@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectionStrategy, Component, OnInit, ViewChild, ViewChildren } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, viewChild, viewChildren } from '@angular/core';
 import { SomeComponent } from './migrations/some.component';
 import { QueriesComponent } from './migrations/queries.component';
 
@@ -41,14 +41,14 @@ export class AppComponent implements AfterViewInit {
   cubeValue = 0;
   doubleValue = 0;
 
-  @ViewChild(QueriesComponent) queries!: QueriesComponent;
-  @ViewChildren('a') aComponents!: QueriesComponent[];
+  readonly queries = viewChild.required(QueriesComponent);
+  readonly aComponents = viewChildren('a');
 
   viewChildName = '';
   numAComponents = 0;
   
   ngAfterViewInit(): void {
-    this.viewChildName = this.queries.name;  
-    this.numAComponents = this.aComponents.length;
+    this.viewChildName = this.queries().name;  
+    this.numAComponents = this.aComponents().length;
   }
 }

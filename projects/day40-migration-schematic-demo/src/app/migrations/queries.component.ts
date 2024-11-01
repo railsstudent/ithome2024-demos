@@ -1,4 +1,4 @@
-import { AfterContentInit, ChangeDetectionStrategy, Component, ContentChild, ContentChildren, ElementRef, QueryList } from '@angular/core';
+import { AfterContentInit, ChangeDetectionStrategy, Component, ElementRef, contentChild, contentChildren } from '@angular/core';
 
 @Component({
   selector: 'app-queries',
@@ -18,14 +18,14 @@ import { AfterContentInit, ChangeDetectionStrategy, Component, ContentChild, Con
 export class QueriesComponent implements AfterContentInit {
   name = 'ViewChild, ContentChild, ContentChildren';
 
-  @ContentChild('header') header!: ElementRef<HTMLDivElement>;
-  @ContentChildren('p') body!: QueryList<ElementRef<HTMLParagraphElement>>;
+  readonly header = contentChild.required<ElementRef<HTMLDivElement>>('header');
+  readonly body = contentChildren<ElementRef<HTMLParagraphElement>>('p');
 
   appendHeader = '';
   list = '';
 
   ngAfterContentInit(): void {
-    this.appendHeader = `${this.header.nativeElement.textContent} Appended`;
-    this.list = this.body.map((p) => p.nativeElement.textContent).join('---');
+    this.appendHeader = `${this.header().nativeElement.textContent} Appended`;
+    this.list = this.body().map((p) => p.nativeElement.textContent).join('---');
   }
 }
