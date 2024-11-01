@@ -11,7 +11,7 @@ export default class AppSignalObjectComponent {
   store = input.required<{ map: Map<string, number> }>();
 
   mapData = computed(() => this.store().map);
-  champ = computed(() => findMax(this.mapData()));
+  champ = computed(() => findMax(this.store().map));
   mostPopular = computed(() => this.champ()?.[0] || '');
 
   title = 'Signal is an Object with a Map';
