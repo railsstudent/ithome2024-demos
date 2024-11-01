@@ -1,4 +1,4 @@
-import { AfterContentInit, ChangeDetectionStrategy, Component, ElementRef, contentChild, contentChildren } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, computed, contentChild, contentChildren } from '@angular/core';
 
 @Component({
   selector: 'app-queries',
@@ -9,23 +9,18 @@ import { AfterContentInit, ChangeDetectionStrategy, Component, ElementRef, conte
     <p>queries works!</p>
     <ng-content select="[header]">A</ng-content>
     <ng-content>B</ng-content>
-    <div>Appendheader: {{ appendHeader }}</div>
-    <div>List: {{ list }}</div>
+    <div>Appendheader: {{ appendHeader() }}</div>
+    <div>List: {{ list() }}</div>
   `,
   styles: ``,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class QueriesComponent implements AfterContentInit {
+export class QueriesComponent {
   name = 'ViewChild, ContentChild, ContentChildren';
 
   readonly header = contentChild.required<ElementRef<HTMLDivElement>>('header');
   readonly body = contentChildren<ElementRef<HTMLParagraphElement>>('p');
 
-  appendHeader = '';
-  list = '';
-
-  ngAfterContentInit(): void {
-    this.appendHeader = `${this.header().nativeElement.textContent} Appended`;
-    this.list = this.body().map((p) => p.nativeElement.textContent).join('---');
-  }
+  appendHeader = computed(() => `${this.header().nativeElement.textContent} Appended`);
+  list = computed(() => this.body().map((p) => p.nativeElement.textContent).join('---'));
 }

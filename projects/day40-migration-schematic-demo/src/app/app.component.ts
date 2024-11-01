@@ -12,19 +12,19 @@ import { QueriesComponent } from './migrations/queries.component';
     <p>Tripe: {{ tripleValue }}, Cube: {{ cubeValue }} Double: {{ doubleValue }}</p>
     <app-queries>
       <div #header header>My Header</div>
-      <p #p>Paragraph 1</p>
-      <p #p>Paragraph 2</p>
+      <p #p>Paragraph 1a</p>
+      <p #p>Paragraph 1b</p>
     </app-queries>
 
     <app-queries #a>
       <div #header header>My Header 2</div>
-      <p #p>Paragraph 1a</p>
       <p #p>Paragraph 2a</p>
+      <p #p>Paragraph 2b</p>
     </app-queries>
     <app-queries #a>
       <div #header header>My Header 3</div>
-      <p #p>Paragraph 1b</p>
-      <p #p>Paragraph 2b</p>
+      <p #p>Paragraph 3b</p>
+      <p #p>Paragraph 3b</p>
     </app-queries>
     <p>ViewChildName: {{ viewChildName() }}</p>
     <p>numAComponents: {{ numAComponents() }}</p>
