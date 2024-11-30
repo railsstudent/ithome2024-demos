@@ -17,7 +17,13 @@ const initialId = 14;
     </div>
     SearchId: {{ searchId() }}, Id: {{ id() }}
   `,
-  styleUrl: './character.component.css',
+  styles: `
+    .container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+  `,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CharacterPickerComponent {

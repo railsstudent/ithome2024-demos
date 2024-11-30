@@ -1,5 +1,4 @@
-import { HttpClient } from '@angular/common/http';
-import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, Injector, signal } from '@angular/core';
 import { CharacterFilmsComponent } from './character-films.component';
 import { CharacterInfoComponent } from './character-info.component';
 import { CharacterPickerComponent } from './character-picker.component';
@@ -20,7 +19,24 @@ import { createRxResourceComputed } from './utils/resource-computed';
     </div>
     <app-character-picker (newSearchId)="id.set($event)" />  
   `,
-  styleUrl: './character.component.css',
+  styles: `
+    :host {
+      display: block;
+      font-size: 1.5rem;
+      padding: 1rem;
+      --main-font-size: 1.25rem;
+    }
+
+    .border {
+      border: 1px solid black; 
+      border-radius: 0.5rem; 
+      padding: 1rem; 
+      margin-bottom: 1rem;
+
+      color: var(--main-color);
+      font-size: var(--main-font-size);
+    }
+  `,
   host: {
     '[style.--main-color]': 'state().rgb',
     '[style.--main-font-size]': 'state().fontSize',
@@ -29,10 +45,10 @@ import { createRxResourceComputed } from './utils/resource-computed';
 })
 export class CharacterComponent {
   id = signal(-1);
-  http = inject(HttpClient);
+  injector = inject(Injector);
 
   personMovies = createRxResourceComputed<number, OptionalPersonFilmsTuple, PersonFilms>(this.id, 
-    personFilmsLoader(this.http),
+    personFilmsLoader(this.injector),
     personFilmsComputed
   )
 

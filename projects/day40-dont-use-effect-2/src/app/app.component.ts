@@ -3,6 +3,7 @@ import { CharacterComponent } from './star-war/character.component';
 
 @Component({
     selector: 'app-root',
+    standalone: true,
     imports: [CharacterComponent],
     template: `
       <h1>Angular Version {{ version }} - {{ name }}!</h1>
