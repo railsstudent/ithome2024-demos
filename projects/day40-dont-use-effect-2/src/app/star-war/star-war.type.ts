@@ -8,3 +8,10 @@ export type Person = {
   gender: string;
   films: string[];
 }
+
+export type PersonFilms = {
+  person: Person | undefined,
+  films: string[]
+};
+
+export type OptionalPersonFilmsTuple = [Person, ...string[]] | undefined

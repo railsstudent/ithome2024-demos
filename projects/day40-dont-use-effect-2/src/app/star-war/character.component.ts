@@ -1,11 +1,11 @@
 import { HttpClient } from '@angular/common/http';
-import { ChangeDetectionStrategy, Component, computed, inject, linkedSignal, signal, WritableSignal } from '@angular/core';
-import { rxResource } from '@angular/core/rxjs-interop';
+import { ChangeDetectionStrategy, Component, computed, inject, linkedSignal, ResourceLoaderParams, signal, WritableSignal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { catchError, forkJoin, map, mergeMap, Observable, of } from 'rxjs';
+import { catchError, of } from 'rxjs';
 import { generateRGBCode } from './generate-rgb';
-import { Person } from './star-war.type';
-import { getPersonMovies } from './get-person-movies.util';
+import { getPersonMovies } from './utils/get-person-movies.util';
+import { OptionalPersonFilmsTuple, Person, PersonFilms } from './star-war.type';
+import { createRxResourceComputed } from './utils/resource-computed';
 
 const initialId = 14;
 const URL = 'https://swapi.dev/api/people';
@@ -75,10 +75,9 @@ export class CharacterComponent {
 
   http = inject(HttpClient);
 
-  personMoviesResource = rxResource({
-    request: () => this.searchId(),
-    loader: ({ request: id }) => {
-      return this.http.get<Person>(`${URL}/${id}`)
+  personMovies = createRxResourceComputed<number, OptionalPersonFilmsTuple, PersonFilms>(this.searchId, 
+    (params: ResourceLoaderParams<number>) => {
+      return this.http.get<Person>(`${URL}/${params.request}`)
         .pipe(
           getPersonMovies(this.http),
           catchError((e) => {
@@ -86,16 +85,12 @@ export class CharacterComponent {
             return of(undefined);
           })
         );
-    }    
-  });
-
-  personMovies = computed(() => {
-    const value = this.personMoviesResource.value();
-    return {
+    },
+    (value: OptionalPersonFilmsTuple) => ({
       person: value ? value[0] : undefined,
-      films: value ? value.slice(1) : [],
-    }
-  });
+      films: value ? value.slice(1) as string[] : [] as string[],
+    })
+  )
 
   state = computed(() => ({ 
     fontSize: this.id() % 2 === 0 ? '1.25rem' : '1.75rem',

@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { catchError, forkJoin, map, mergeMap, Observable, of } from 'rxjs';
-import { Person } from './star-war.type';
+import { Person } from '../star-war.type';
 
 export function getPersonMovies(http: HttpClient) {
     return function(source: Observable<Person>) {
