@@ -1,14 +1,12 @@
 import { HttpClient } from '@angular/common/http';
-import { ChangeDetectionStrategy, Component, computed, inject, linkedSignal, ResourceLoaderParams, signal, WritableSignal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, linkedSignal, signal, WritableSignal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { catchError, of } from 'rxjs';
 import { generateRGBCode } from './generate-rgb';
-import { getPersonMovies } from './utils/get-person-movies.util';
-import { OptionalPersonFilmsTuple, Person, PersonFilms } from './star-war.type';
+import { personFilmsComputed, personFilmsLoader } from './resources/person-movies.resource';
+import { OptionalPersonFilmsTuple, PersonFilms } from './star-war.type';
 import { createRxResourceComputed } from './utils/resource-computed';
 
 const initialId = 14;
-const URL = 'https://swapi.dev/api/people';
 
 @Component({
   selector: 'app-character',
@@ -76,20 +74,8 @@ export class CharacterComponent {
   http = inject(HttpClient);
 
   personMovies = createRxResourceComputed<number, OptionalPersonFilmsTuple, PersonFilms>(this.searchId, 
-    (params: ResourceLoaderParams<number>) => {
-      return this.http.get<Person>(`${URL}/${params.request}`)
-        .pipe(
-          getPersonMovies(this.http),
-          catchError((e) => {
-            console.error(e);
-            return of(undefined);
-          })
-        );
-    },
-    (value: OptionalPersonFilmsTuple) => ({
-      person: value ? value[0] : undefined,
-      films: value ? value.slice(1) as string[] : [] as string[],
-    })
+    personFilmsLoader(this.http),
+    personFilmsComputed
   )
 
   state = computed(() => ({ 
