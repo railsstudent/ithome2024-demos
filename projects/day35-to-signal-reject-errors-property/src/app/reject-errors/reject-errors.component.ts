@@ -4,10 +4,9 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import ErrorDialogComponent from '../errors/error-dialog.component';
 
 @Component({
-  selector: 'app-reject-errors-example',
-  standalone: true,
-  imports: [ErrorDialogComponent],
-  template: `
+    selector: 'app-reject-errors-example',
+    imports: [ErrorDialogComponent],
+    template: `
     <h3>toSignal has rejectErrors: true option and error is thrown back to RxJS to be captured as uncaught exception.</h3>
     <div>
       <p>total: {{ total() }}</p>
@@ -18,13 +17,13 @@ import ErrorDialogComponent from '../errors/error-dialog.component';
       <p>Error Dialog only opens once.</p>
     </app-error-dialog>
   `,
-  styles: `
+    styles: `
     button {
       margin-right: 1rem;
       padding: 0.5rem;
     }
   `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export default class RejectErrorsComponent {
   errorDialog = viewChild.required(ErrorDialogComponent);

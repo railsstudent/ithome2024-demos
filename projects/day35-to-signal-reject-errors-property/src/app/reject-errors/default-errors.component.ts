@@ -5,10 +5,9 @@ import ErrorDialogComponent from '../errors/error-dialog.component';
 import { ERROR_DIALOG_TOKEN } from '../errors/error-token.constant';
 
 @Component({
-  selector: 'app-default-errors-example',
-  standalone: true,
-  imports: [ErrorDialogComponent],
-  template: `
+    selector: 'app-default-errors-example',
+    imports: [ErrorDialogComponent],
+    template: `
     <h3>Default error handling of toSignal. Error is handled by the global error handler.</h3>
     <div>
       <p>total: {{ total() }}</p>
@@ -19,13 +18,13 @@ import { ERROR_DIALOG_TOKEN } from '../errors/error-token.constant';
       <p>Error is thrown and the global error handler handles it.</p>
     </app-error-dialog>
   `,
-  styles: `
+    styles: `
     button {
       margin-right: 1rem;
       padding: 0.5rem;
     }
   `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export default class DefaultErrorsComponent {
   modal = inject(ERROR_DIALOG_TOKEN);

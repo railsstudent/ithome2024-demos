@@ -4,17 +4,16 @@ import { NavbarComponent } from './navbar.component';
 import { navLinks } from './app.routes';
 
 @Component({
-  selector: 'app-root',
-  standalone: true,
-  imports: [RouterOutlet, NavbarComponent],
-  template: `
+    selector: 'app-root',
+    imports: [RouterOutlet, NavbarComponent],
+    template: `
     <h1>Hello from {{ name }}!</h1>
     <h2>Angular {{ version }} - {{ description }}</h2>
     <h3>The demos throws an error when the value is 5.</h3>
     <app-navbar [navLinks]="navLinks" />
     <router-outlet />
   `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AppComponent {
   version = VERSION.full;

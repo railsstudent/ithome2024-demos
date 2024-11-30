@@ -3,16 +3,15 @@ import AppSignalStateGrandchildComponent from "./app-signal-state-grandchild.com
 import { SignalStateService } from "../services/signal-state.service";
 
 @Component({
-  selector: 'app-signal-state',
-  standalone: true,
-  imports: [AppSignalStateGrandchildComponent],
-  template: `
+    selector: 'app-signal-state',
+    imports: [AppSignalStateGrandchildComponent],
+    template: `
     <h3>NgRx Signal State Component</h3>
     <div [class.enabled]="isEnabled()">
       <app-signal-state-grandchild />
     </div>
   `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export default class AppSignalStateComponent {  
   isEnabled = computed(() => {

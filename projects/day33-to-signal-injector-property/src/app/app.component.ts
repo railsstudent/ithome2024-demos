@@ -2,16 +2,15 @@ import { ChangeDetectionStrategy, Component, VERSION } from '@angular/core';
 import { StarWarComponent } from './star-war.component';
 
 @Component({
-  selector: 'app-root',
-  standalone: true,
-  imports: [StarWarComponent],
-  template: `
+    selector: 'app-root',
+    imports: [StarWarComponent],
+    template: `
     <h1>Hello from {{ name }}!</h1>
     <h2>Angular {{ version }} - {{ description }}</h2>
     <app-star-war [jedi]="1" [sith]="4" rgbTuple="yellow" />
     <app-star-war [jedi]="10" [sith]="44" starShip="Jedi starfighter" [rgbTuple]="lightBlue" />
   `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AppComponent {
   version = VERSION.full;

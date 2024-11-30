@@ -7,10 +7,9 @@ import { findMax } from './signals/find-max.util';
 import { updateAndReturnMap } from './update-map.util';
 
 @Component({
-  selector: 'app-root',
-  standalone: true,
-  imports: [AppSimpleFormComponent, AppSignalObjectComponent, AppSignalMapDataComponent],
-  template: `
+    selector: 'app-root',
+    imports: [AppSimpleFormComponent, AppSignalObjectComponent, AppSignalMapDataComponent],
+    template: `
     <h1>Hello from {{ name }}!</h1>
     <h2>Angular {{ version }} - {{ description }}</h2>
     <app-simple-form (add)="updateMaps($event)" 
@@ -26,7 +25,7 @@ import { updateAndReturnMap } from './update-map.util';
     <app-signal-map-data [mapData]="aDeepCopyMap()" title='Signal with a new map' />
     <app-signal-object [store]="this.store()" />
   `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AppComponent {
   version = VERSION.full;

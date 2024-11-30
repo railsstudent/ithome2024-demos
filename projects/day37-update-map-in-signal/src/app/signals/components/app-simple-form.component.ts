@@ -3,10 +3,9 @@ import { FormsModule } from '@angular/forms';
 import { Data } from "../types/data.type";
 
 @Component({
-  selector: 'app-simple-form',
-  standalone: true,
-  imports: [FormsModule],
-  template: `
+    selector: 'app-simple-form',
+    imports: [FormsModule],
+    template: `
     <div>
       <h3>Add Map Key Form</h3>
       <form (ngSubmit)="add.emit({ name: this.data(), count: 1 })">
@@ -24,7 +23,7 @@ import { Data } from "../types/data.type";
       </form>
     </div>
   `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export default class AppSimpleFormComponent {  
   data = signal('');

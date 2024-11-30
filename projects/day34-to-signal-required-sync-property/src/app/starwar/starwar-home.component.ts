@@ -2,15 +2,14 @@ import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { StarWarComponent } from './star-war.component';
 
 @Component({
-  selector: 'app-star-war-home',
-  standalone: true,
-  imports: [StarWarComponent],
-  template: `
+    selector: 'app-star-war-home',
+    imports: [StarWarComponent],
+    template: `
     <button (click)="toggle()">Toggle</button>
     <app-star-war [jedi]="jedi()" [sith]="sith()" rgbTuple="yellow" />
     <app-star-war [jedi]="10" [sith]="44" starShip="Jedi starfighter" [rgbTuple]="lightBlue" />
   `,
-  styles: `
+    styles: `
     div {
       border: 1px solid black;
       border-radius: 0.25rem;
@@ -18,7 +17,7 @@ import { StarWarComponent } from './star-war.component';
       margin-bottom: 1rem;
     }
   `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export default class StarWarHomeComponent {
   lightBlue = [137, 207, 240] as [number, number, number];

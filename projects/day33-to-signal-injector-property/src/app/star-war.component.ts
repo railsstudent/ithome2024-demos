@@ -7,10 +7,9 @@ import { StarWarPersonComponent } from './star-war-person.component';
 import { StarWarService } from './star-war.service';
 
 @Component({
-  selector: 'app-star-war',
-  standalone: true,
-  imports: [NgStyle, StarWarPersonComponent],
-  template: `
+    selector: 'app-star-war',
+    imports: [NgStyle, StarWarPersonComponent],
+    template: `
     <h3>Star War Jedi vs Sith</h3>
     <div [ngStyle]="rgbs()">
       <div style="display: flex; justify-content: space-between;">
@@ -22,7 +21,7 @@ import { StarWarService } from './star-war.service';
       <app-star-war-person [person]="evil()" kind="Sith Lord" />
     </div>
   `,
-  styles: `
+    styles: `
     div {
       border: 1px solid black;
       border-radius: 0.25rem;
@@ -30,7 +29,7 @@ import { StarWarService } from './star-war.service';
       margin-bottom: 1rem;
     }
   `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class StarWarComponent implements OnInit {
   // required signal input

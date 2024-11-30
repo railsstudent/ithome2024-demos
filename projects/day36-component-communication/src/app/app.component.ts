@@ -8,10 +8,9 @@ import { CommunicationService } from './communication/services/communication.ser
 import { SignalStateService } from './communication/services/signal-state.service';
 
 @Component({
-  selector: 'app-root',
-  standalone: true,
-  imports: [NavbarComponent, RouterOutlet],
-  template: `
+    selector: 'app-root',
+    imports: [NavbarComponent, RouterOutlet],
+    template: `
     <h1>Hello from {{ name }}!</h1>
     <h2>Angular {{ version }} - {{ description }}</h2>
     <h3>The demos throws an error when the value is 5.</h3>
@@ -19,16 +18,16 @@ import { SignalStateService } from './communication/services/signal-state.servic
     <p>Selected feature: {{ unifiedFeature() }}</p>
     <router-outlet (activate)="onActivate($event)" (deactivate)="onDeactivate()" />
   `,
-  providers: [
-    {
-      provide: PROVIDE_INJECT_TOKEN,
-      useValue: {
-        secretValue: signal('provide-inject-secret'),
-        feature: signal(null)
-      }
-    }
-  ],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    providers: [
+        {
+            provide: PROVIDE_INJECT_TOKEN,
+            useValue: {
+                secretValue: signal('provide-inject-secret'),
+                feature: signal(null)
+            }
+        }
+    ],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AppComponent {
   version = VERSION.full;

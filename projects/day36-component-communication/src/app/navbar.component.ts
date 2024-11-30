@@ -2,10 +2,9 @@ import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
-  selector: 'app-navbar',
-  standalone: true,
-  imports: [RouterLink, RouterLinkActive],
-  template: `
+    selector: 'app-navbar',
+    imports: [RouterLink, RouterLinkActive],
+    template: `
     <nav>
       <ul style="display: flex;">
         @for (route of navLinks(); track $index) {
@@ -16,7 +15,7 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
       </ul>
     </nav>
   `,
-  styles: `
+    styles: `
     .active {
       font-weight: bold;
       color: darksalmon;
@@ -26,7 +25,7 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
       margin-right: 1rem;
     }
   `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NavbarComponent {
   navLinks = input.required<{ link: string; path: string[] }[]>();

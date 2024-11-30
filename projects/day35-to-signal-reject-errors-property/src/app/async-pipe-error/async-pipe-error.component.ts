@@ -3,10 +3,9 @@ import { BehaviorSubject, scan, map } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
 
 @Component({
-  selector: 'app-async-pipe-error',
-  standalone: true,
-  imports: [AsyncPipe],
-  template: `
+    selector: 'app-async-pipe-error',
+    imports: [AsyncPipe],
+    template: `
     <h3>AsyncPipe displays the last good value after an error is thrown.</h3>
     <div>
       <p>total: {{ total$ | async }}</p>
@@ -14,13 +13,13 @@ import { AsyncPipe } from '@angular/common';
     <button (click)="something.next(1)">Add</button>
     <button (click)="something.next(-1)">Subtract</button>
   `,
-  styles: `
+    styles: `
     button {
       margin-right: 1rem;
       padding: 0.5rem;
     }
   `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export default class AsyncPipeErrorComponent {
   something = new BehaviorSubject(0);

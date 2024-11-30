@@ -8,10 +8,9 @@ const MY_MAP = new Map<string, number>();
 MY_MAP.set('orange', 3);
 
 @Component({
-  selector: 'app-root',
-  standalone: true,
-  imports: [AppSignalObjectComponent, AppSignalMapDataComponent],
-  template: `
+    selector: 'app-root',
+    imports: [AppSignalObjectComponent, AppSignalMapDataComponent],
+    template: `
     <h1>Hello from {{ name }}!</h1>
     <h2>Angular {{ version }} - {{ description }}</h2>
     <button (click)="addBanana()">Add banana</button>
@@ -27,7 +26,7 @@ MY_MAP.set('orange', 3);
     <app-signal-map-data [mapData]="aDeepCopyMap()" title='Signal with a new map' />
     <app-signal-object [store]="this.store()" />
   `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AppComponent {
   version = VERSION.full;

@@ -3,16 +3,15 @@ import { CommunicationService } from "../services/communication.service";
 import AppSignalInServiceGrandchildComponent from "./app-signal-in-service-grandchild.component";
 
 @Component({
-  selector: 'app-signal-in-service',
-  standalone: true,
-  imports: [AppSignalInServiceGrandchildComponent],
-  template: `
+    selector: 'app-signal-in-service',
+    imports: [AppSignalInServiceGrandchildComponent],
+    template: `
     <h3>Signal in a Service Component</h3>
     <div [class.enabled]="isEnabled()">
       <app-signal-in-service-grandchild />
     </div>
   `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export default class AppSignalInServiceComponent {  
   isEnabled = computed(() => {

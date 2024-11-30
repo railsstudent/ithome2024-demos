@@ -3,10 +3,9 @@ import { AppService } from './app.service';
 import { ChildComponent } from './child/child.component';
 
 @Component({
-  selector: 'app-root',
-  standalone: true,
-  imports: [ChildComponent],
-  template: `
+    selector: 'app-root',
+    imports: [ChildComponent],
+    template: `
     <h1>Hello, {{ title }}</h1>
     <div>
       <p id="value">Value: {{ appService.value() }}</p>
@@ -18,7 +17,7 @@ import { ChildComponent } from './child/child.component';
       <app-child [count]="appService.value()" />
     </div>
   `,
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AppComponent {
   title = 'day29-signal-testing';
