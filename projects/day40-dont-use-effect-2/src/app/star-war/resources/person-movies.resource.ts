@@ -7,14 +7,17 @@ import { getPersonMovies } from '../utils/get-person-movies.util';
 export const personFilmsLoader = (http: HttpClient) => {
     const URL = 'https://swapi.dev/api/people';
     return (params: ResourceLoaderParams<number>) => {
-      return http.get<Person>(`${URL}/${params.request}`)
-        .pipe(
-          getPersonMovies(http),
-          catchError((e) => {
-            console.error(e);
+        if (params.request <= 0) {
             return of(undefined);
-          })
-        );
+        }
+        return http.get<Person>(`${URL}/${params.request}`)
+            .pipe(
+            getPersonMovies(http),
+            catchError((e) => {
+                console.error(e);
+                return of(undefined);
+            })
+            );
     }
 }
   
