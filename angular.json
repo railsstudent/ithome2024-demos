@@ -870,7 +870,10 @@
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
-          "style": "scss"
+          "style": "scss",
+          "inlineStyle": true,
+          "inlineTemplate": true,
+          "changeDetection": "OnPush"
         }
       },
       "root": "projects/day40-dont-use-effect-2",
@@ -884,7 +887,6 @@
             "index": "projects/day40-dont-use-effect-2/src/index.html",
             "browser": "projects/day40-dont-use-effect-2/src/main.ts",
             "polyfills": [
-              "zone.js"
             ],
             "tsConfig": "projects/day40-dont-use-effect-2/tsconfig.app.json",
             "inlineStyleLanguage": "scss",
@@ -942,8 +944,6 @@
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
             "polyfills": [
-              "zone.js",
-              "zone.js/testing"
             ],
             "tsConfig": "projects/day40-dont-use-effect-2/tsconfig.spec.json",
             "inlineStyleLanguage": "scss",
