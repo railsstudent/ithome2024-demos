@@ -2,7 +2,6 @@ import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@a
 import { map, mergeMap, catchError, of, forkJoin, switchMap, Observable } from 'rxjs';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
-// import { StarWarService } from './star-war.service';
 import { HttpClient } from '@angular/common/http';
 import { Person } from './star-war.type';
 import { generateRGBCode } from './generate-rgb';
@@ -104,10 +103,6 @@ function getPersonMovies(http: HttpClient) {
 export class CharacterComponent {
   readonly min = 1;
   readonly max = 83;
-
-  // starWarService = inject(StarWarService);
-  // state = this.starWarService.state;
-  // id = this.starWarService.id;
 
   id = signal(initialId);
 
