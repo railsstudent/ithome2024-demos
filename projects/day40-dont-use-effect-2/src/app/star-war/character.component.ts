@@ -1,41 +1,24 @@
 import { HttpClient } from '@angular/common/http';
 import { ChangeDetectionStrategy, Component, computed, inject, linkedSignal, signal, WritableSignal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { CharacterInfoComponent } from './character-info.component';
 import { generateRGBCode } from './generate-rgb';
 import { personFilmsComputed, personFilmsLoader } from './resources/person-movies.resource';
 import { OptionalPersonFilmsTuple, PersonFilms } from './star-war.type';
 import { createRxResourceComputed } from './utils/resource-computed';
+import { CharacterFilmsComponent } from './character-films.component';
 
 const initialId = 14;
 
 @Component({
   selector: 'app-character',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, CharacterInfoComponent, CharacterFilmsComponent],
   template: `
     <h3>Display the 83 Star War Characters</h3>
     <div class="border">
-      @if(personMovies().person; as person) {
-        <p>Id: {{ searchId() }} </p>
-        <p>Name: {{ person.name }}</p>
-        <p>Height: {{ person.height }}</p>
-        <p>Mass: {{ person.mass }}</p>
-        <p>Hair Color: {{ person.hair_color }}</p>
-        <p>Skin Color: {{ person.skin_color }}</p>
-        <p>Eye Color: {{ person.eye_color }}</p>
-        <p>Gender: {{ person.gender }}</p>
-      } @else {
-        <p>No info</p>
-      }
-
-      <p style="text-decoration: underline">Movies</p>
-      @for(film of personMovies().films; track film) {
-        <ul style="padding-left: 1rem;">
-          <li>{{ film }}</li>
-        </ul>
-      } @empty {
-        <p>No movie</p>
-      }
+      <app-character-info [searchId]="searchId()" [info]="personMovies().person" />
+      <app-character-films [films]="personMovies().films" />
     </div>
     <div class="container">
       <button (click)="updateId(-2)">-2</button>
