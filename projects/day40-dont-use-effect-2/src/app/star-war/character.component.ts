@@ -5,31 +5,10 @@ import { FormsModule } from '@angular/forms';
 import { catchError, forkJoin, map, mergeMap, Observable, of } from 'rxjs';
 import { generateRGBCode } from './generate-rgb';
 import { Person } from './star-war.type';
+import { getPersonMovies } from './get-person-movies.util';
 
 const initialId = 14;
 const URL = 'https://swapi.dev/api/people';
-
-function getPersonMovies(http: HttpClient) {
-  return function(source: Observable<Person>) {
-    return source.pipe(
-      mergeMap((person) => {
-        const urls = person?.films ?? [];
-        const filmTitles$ = urls.map((url) => http.get<{ title: string }>(url).pipe(
-          map(({ title }) => title),
-          catchError((err) => {
-            console.error(err);
-            return of('');
-          })
-        ));
-
-        return forkJoin([Promise.resolve(person), ...filmTitles$]);
-      }),
-      catchError((err) => {
-        console.error(err);
-        return of(undefined);
-      }));
-  }
-}
 
 @Component({
   selector: 'app-character',
@@ -65,9 +44,9 @@ function getPersonMovies(http: HttpClient) {
       <button (click)="updateId(-1)">-1</button>
       <button (click)="updateId(1)">+1</button>
       <button (click)="updateId(2)">+2</button>
-      <input type="number" [(ngModel)]="searchId" />
+      <input type="number" [(ngModel)]="id" />
     </div>
-    SearchId: {{ searchId() }}
+    SearchId: {{ searchId() }}, Id: {{ id() }}
   `,
   styleUrl: './character.component.css',
   host: {
@@ -123,7 +102,20 @@ export class CharacterComponent {
     rgb: generateRGBCode(),
   }));
 
+  private isInRange(value: number, delta: number) {
+    const newId = value + delta;
+    return newId >= this.min && newId <= this.max;
+  }
+
   updateId(delta: number) {
-    this.id.update((value) => Math.min(this.max, Math.max(this.min, value + delta)));
+    this.id.update((value) => {
+      if (this.isInRange(value, delta)) {
+        return value + delta;
+      } else if (this.isInRange(this.searchId(), delta)) {
+        return this.searchId() + delta;
+      }
+
+      return this.searchId();
+    });
   }
 }
