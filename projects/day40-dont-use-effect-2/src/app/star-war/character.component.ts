@@ -1,14 +1,13 @@
-import { ChangeDetectionStrategy, Component, computed, inject, linkedSignal, signal, WritableSignal } from '@angular/core';
-import { map, mergeMap, catchError, of, forkJoin, switchMap, Observable } from 'rxjs';
-import { toObservable, toSignal } from '@angular/core/rxjs-interop';
-import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
-import { Person } from './star-war.type';
+import { ChangeDetectionStrategy, Component, computed, inject, linkedSignal, signal, WritableSignal } from '@angular/core';
+import { rxResource } from '@angular/core/rxjs-interop';
+import { FormsModule } from '@angular/forms';
+import { catchError, forkJoin, map, mergeMap, Observable, of } from 'rxjs';
 import { generateRGBCode } from './generate-rgb';
+import { Person } from './star-war.type';
 
 const initialId = 14;
 const URL = 'https://swapi.dev/api/people';
-
 
 function getPersonMovies(http: HttpClient) {
   return function(source: Observable<Person>) {
@@ -39,8 +38,8 @@ function getPersonMovies(http: HttpClient) {
   template: `
     <h3>Display the 83 Star War Characters</h3>
     <div class="border">
-      @if(state().person(); as person) {
-        <p>Id: {{ id() }} </p>
+      @if(personMovies().person; as person) {
+        <p>Id: {{ searchId() }} </p>
         <p>Name: {{ person.name }}</p>
         <p>Height: {{ person.height }}</p>
         <p>Mass: {{ person.mass }}</p>
@@ -53,7 +52,7 @@ function getPersonMovies(http: HttpClient) {
       }
 
       <p style="text-decoration: underline">Movies</p>
-      @for(film of state().films(); track film) {
+      @for(film of personMovies().films; track film) {
         <ul style="padding-left: 1rem;">
           <li>{{ film }}</li>
         </ul>
@@ -72,8 +71,8 @@ function getPersonMovies(http: HttpClient) {
   `,
   styleUrl: './character.component.css',
   host: {
-    '[style.--main-color]': 'state2().rgb',
-    '[style.--main-font-size]': 'state2().fontSize',
+    '[style.--main-color]': 'state().rgb',
+    '[style.--main-font-size]': 'state().fontSize',
   },
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -82,22 +81,6 @@ export class CharacterComponent {
   readonly max = 83;
 
   id = signal(initialId);
-
-  http = inject(HttpClient);
-  #personMovies = toSignal(toObservable(this.id)
-    .pipe(
-      switchMap((id) => this.http.get<Person>(`${URL}/${id}`)
-        .pipe(getPersonMovies(this.http))
-      ),
-  ), { initialValue: undefined });
-
-  state = computed(() => {
-    const result = this.#personMovies();
-    return { 
-      person: signal(result && result.length > 0 ? result[0] : undefined),
-      films: signal(result && result.length > 1 ? result.slice(1): []),
-    };
-  }); 
 
   searchId = linkedSignal<WritableSignal<number>, number>({
     source: () => this.id,
@@ -111,7 +94,31 @@ export class CharacterComponent {
     }
   });
 
-  state2 = computed(() => ({ 
+  http = inject(HttpClient);
+
+  personMoviesResource = rxResource({
+    request: () => this.searchId(),
+    loader: ({ request: id }) => {
+      return this.http.get<Person>(`${URL}/${id}`)
+        .pipe(
+          getPersonMovies(this.http),
+          catchError((e) => {
+            console.error(e);
+            return of(undefined);
+          })
+        );
+    }    
+  });
+
+  personMovies = computed(() => {
+    const value = this.personMoviesResource.value();
+    return {
+      person: value ? value[0] : undefined,
+      films: value ? value.slice(1) : [],
+    }
+  });
+
+  state = computed(() => ({ 
     fontSize: this.id() % 2 === 0 ? '1.25rem' : '1.75rem',
     rgb: generateRGBCode(),
   }));
