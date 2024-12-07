@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, linkedSignal, output, signal, Signal } from '@angular/core';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
-import { debounceTime } from 'rxjs';
+import { BehaviorSubject, debounceTime } from 'rxjs';
 
 const initialId = 14;
 
@@ -15,9 +15,11 @@ const initialId = 14;
       <button (click)="updateId(-1)">-1</button>
       <button (click)="updateId(1)">+1</button>
       <button (click)="updateId(2)">+2</button>
-      <input type="number" [(ngModel)]="id" />
+      <!-- <input type="number" [(ngModel)]="id" /> -->
+      <input type="number" [ngModel]="idSub.getValue()" (ngModelChange)="idSub.next($event)" />
     </div>
-    SearchId: {{ searchId() }}, Id: {{ id() }}
+    <!-- SearchId: {{ searchId() }}, Id: {{ id() }} -->
+    SearchId: {{ searchId() }}, Id: {{ idSub.getValue() }}
   `,
   styles: `
     .container {
@@ -33,8 +35,11 @@ export class CharacterPickerComponent {
   readonly max = 83;
 
   newSearchId = output<number>();
-  id = signal(initialId);
-  debouncedSignal = toSignal(toObservable(this.id).pipe(debounceTime(300)), { initialValue: initialId });
+  // id = signal(initialId);
+  // debouncedSignal = toSignal(toObservable(this.id).pipe(debounceTime(300)), { initialValue: initialId });
+
+  idSub = new BehaviorSubject(initialId);
+  debouncedSignal = toSignal(this.idSub.pipe(debounceTime(300)), { initialValue: initialId });
   
   searchId = linkedSignal<Signal<number>, number>({
     source: () => this.debouncedSignal,
@@ -52,6 +57,7 @@ export class CharacterPickerComponent {
   });
 
   updateId(delta: number) {
-    this.id.update((value) => value + delta);
+    // this.id.update((value) => value + delta);
+    this.idSub.next(this.idSub.getValue() + delta);
   }
 }
