@@ -51,19 +51,7 @@ export class CharacterPickerComponent {
     }
   });
 
-  private isInRange(value: number, delta: number) {
-    const newId = value + delta;
-    return newId >= this.min && newId <= this.max;
-  }
-
   updateId(delta: number) {
-    this.id.update((value) => {
-      if (this.isInRange(value, delta)) {
-        return value + delta;
-      } else if (this.isInRange(this.searchId(), delta)) {
-        return this.searchId() + delta;
-      }
-      return this.searchId();
-    });
+    this.id.update((value) => value + delta);
   }
 }
