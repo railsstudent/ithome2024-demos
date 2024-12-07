@@ -1,7 +1,7 @@
-import { ChangeDetectionStrategy, Component, linkedSignal, output, Signal } from '@angular/core';
-import { toSignal } from '@angular/core/rxjs-interop';
+import { ChangeDetectionStrategy, Component, linkedSignal, output, signal, Signal } from '@angular/core';
+import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
-import { BehaviorSubject, debounceTime } from 'rxjs';
+import { debounceTime } from 'rxjs';
 
 const initialId = 14;
 
@@ -15,7 +15,7 @@ const initialId = 14;
       <button (click)="updateId(-1)">-1</button>
       <button (click)="updateId(1)">+1</button>
       <button (click)="updateId(2)">+2</button>
-      <input type="number" [ngModel]="idSub.getValue()" (ngModelChange)="idSub.next($event)" />
+      <input type="number" [(ngModel)]="id" />
     </div>
     SearchId: {{ searchId() }}, Id: {{ id() }}
   `,
@@ -33,11 +33,11 @@ export class CharacterPickerComponent {
   readonly max = 83;
 
   newSearchId = output<number>();
-  idSub = new BehaviorSubject<number>(initialId);
-  id = toSignal(this.idSub.asObservable().pipe(debounceTime(300)), { initialValue: initialId });
+  id = signal(initialId);
+  debouncedSignal = toSignal(toObservable(this.id).pipe(debounceTime(300)), { initialValue: initialId });
   
   searchId = linkedSignal<Signal<number>, number>({
-    source: () => this.id,
+    source: () => this.debouncedSignal,
     computation: (source, previous) => { 
       const id = source();
       if (!previous) {
@@ -57,12 +57,13 @@ export class CharacterPickerComponent {
   }
 
   updateId(delta: number) {
-    let value = this.searchId(); 
-    if (this.isInRange(this.idSub.getValue(), delta)) {
-      value = this.idSub.getValue() + delta;
-    } else if (this.isInRange(this.searchId(), delta)) {
-      value = this.searchId() + delta;
-    }
-    this.idSub.next(value);
+    this.id.update((value) => {
+      if (this.isInRange(value, delta)) {
+        return value + delta;
+      } else if (this.isInRange(this.searchId(), delta)) {
+        return this.searchId() + delta;
+      }
+      return this.searchId();
+    });
   }
 }
