@@ -1,5 +1,5 @@
-import { ChangeDetectionStrategy, Component, linkedSignal, output, signal, Signal } from '@angular/core';
-import { toObservable, toSignal } from '@angular/core/rxjs-interop';
+import { ChangeDetectionStrategy, Component, linkedSignal, output, Signal } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 import { BehaviorSubject, debounceTime } from 'rxjs';
 
