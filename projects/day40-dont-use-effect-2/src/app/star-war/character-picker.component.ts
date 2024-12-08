@@ -16,7 +16,7 @@ const initialId = 14;
       <button (click)="updateId(2)">+2</button>
       <input type="number" [(ngModel)]="id" />
     </div>
-    SearchId: {{ searchId() }}, Id: {{ id() }}
+    debouncedSignal: {{ debouncedSignal() }}, Id: {{ id() }}
   `,
   styles: `
     .container {
@@ -48,21 +48,6 @@ export class CharacterPickerComponent {
     },
   });
   
-  searchId = linkedSignal<Signal<number>, number>({
-    source: () => this.debouncedSignal,
-    computation: (source, previous) => { 
-      const id = source();
-      if (!previous) {
-        this.newSearchId.emit(id);
-        return id;
-      }
-
-      const withinRangeId = (id >= this.min && id <= this.max) ? id : previous.value;
-      this.newSearchId.emit(withinRangeId);
-      return withinRangeId;
-    }
-  });
-
   updateId(delta: number) {
     this.id.update((value) => value + delta);
   }
