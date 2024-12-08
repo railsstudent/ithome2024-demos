@@ -1,7 +1,6 @@
-import { ChangeDetectionStrategy, Component, linkedSignal, output, Signal } from '@angular/core';
-import { toSignal } from '@angular/core/rxjs-interop';
+import { ChangeDetectionStrategy, Component, linkedSignal, output, signal, Signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { BehaviorSubject, debounceTime } from 'rxjs';
+import { debounced } from './utils/debounced-signal';
 
 const initialId = 14;
 
@@ -15,11 +14,9 @@ const initialId = 14;
       <button (click)="updateId(-1)">-1</button>
       <button (click)="updateId(1)">+1</button>
       <button (click)="updateId(2)">+2</button>
-      <!-- <input type="number" [(ngModel)]="id" /> -->
-      <input type="number" [ngModel]="idSub.getValue()" (ngModelChange)="idSub.next($event)" />
+      <input type="number" [(ngModel)]="id" />
     </div>
-    <!-- SearchId: {{ searchId() }}, Id: {{ id() }} -->
-    SearchId: {{ searchId() }}, Id: {{ idSub.getValue() }}
+    SearchId: {{ searchId() }}, Id: {{ id() }}
   `,
   styles: `
     .container {
@@ -35,11 +32,21 @@ export class CharacterPickerComponent {
   readonly max = 83;
 
   newSearchId = output<number>();
-  // id = signal(initialId);
-  // debouncedSignal = toSignal(toObservable(this.id).pipe(debounceTime(300)), { initialValue: initialId });
+  id = signal(initialId);
+  debouncedSignal = debounced(this.id, {
+    timeoutMs: 300,
+    computation: (value, previous) => {
+      let emittedValue = this.id();
+      if (value && previous)  {
+        emittedValue = (value >= this.min && value <= this.max) ? value : previous.value
+      } else if (previous) {
+        emittedValue = previous.value
+      }
 
-  idSub = new BehaviorSubject(initialId);
-  debouncedSignal = toSignal(this.idSub.pipe(debounceTime(300)), { initialValue: initialId });
+      this.newSearchId.emit(emittedValue);
+      return emittedValue;
+    },
+  });
   
   searchId = linkedSignal<Signal<number>, number>({
     source: () => this.debouncedSignal,
@@ -57,7 +64,6 @@ export class CharacterPickerComponent {
   });
 
   updateId(delta: number) {
-    // this.id.update((value) => value + delta);
-    this.idSub.next(this.idSub.getValue() + delta);
+    this.id.update((value) => value + delta);
   }
 }
