@@ -48,9 +48,7 @@ export class CharacterPickerComponent {
   });
 
   constructor() {
-    effect(() => {
-      this.newSearchId.emit(this.debouncedSignal())  
-    });
+    effect(() => this.newSearchId.emit(this.debouncedSignal()));
   }
   
   updateId(delta: number) {

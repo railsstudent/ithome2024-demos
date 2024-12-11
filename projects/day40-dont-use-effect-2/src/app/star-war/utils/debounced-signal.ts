@@ -1,4 +1,4 @@
-import { Injector, linkedSignal, resource, Signal, ValueEqualityFn } from '@angular/core';
+import { Injector, linkedSignal, resource, Signal, ValueEqualityFn, WritableSignal } from '@angular/core';
 
 const sleep = (ms: number, signal?: AbortSignal): Promise<void> => {
     return new Promise<void>((resolve, reject) => {
@@ -32,7 +32,7 @@ export type DebouncedOptions<T> = {
   export const debounced = <T>(
     source: Signal<T>,
     options: DebouncedOptions<T>
-  ): Signal<T> => {
+  ): WritableSignal<T> => {
     const debouncedResource = resource({
       request: source,
       loader: async ({ request, abortSignal }) => {
