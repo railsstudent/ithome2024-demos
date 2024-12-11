@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, linkedSignal, output, signal, Signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, effect, output, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { debounced } from './utils/debounced-signal';
 
@@ -43,10 +43,15 @@ export class CharacterPickerComponent {
         emittedValue = previous.value
       }
 
-      this.newSearchId.emit(emittedValue);
       return emittedValue;
     },
   });
+
+  constructor() {
+    effect(() => {
+      this.newSearchId.emit(this.debouncedSignal())  
+    });
+  }
   
   updateId(delta: number) {
     this.id.update((value) => value + delta);
