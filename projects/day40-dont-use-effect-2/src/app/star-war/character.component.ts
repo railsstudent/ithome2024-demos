@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, inject, Injector, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, Injector, linkedSignal, signal } from '@angular/core';
 import { CharacterFilmsComponent } from './character-films.component';
 import { CharacterInfoComponent } from './character-info.component';
 import { CharacterPickerComponent } from './character-picker.component';
@@ -38,8 +38,8 @@ import { createRxResourceComputed } from './utils/resource-computed';
     }
   `,
   host: {
-    '[style.--main-color]': 'state().rgb',
-    '[style.--main-font-size]': 'state().fontSize',
+    '[style.--main-color]': 'rgb()',
+    '[style.--main-font-size]': 'fontSize()',
   },
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -52,8 +52,13 @@ export class CharacterComponent {
     personFilmsComputed
   )
 
-  state = computed(() => ({ 
-    fontSize: this.id() % 2 === 0 ? '1.25rem' : '1.75rem',
-    rgb: generateRGBCode(),
-  }));
+  rgb = linkedSignal({
+    source: () => this.id,
+    computation: (source) => {
+      console.log('rgb id', source());
+      return generateRGBCode();
+    }
+  })  
+
+  fontSize = computed(() => this.id() % 2 === 0 ? '1.25rem' : '1.75rem');
 }
