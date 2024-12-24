@@ -6,7 +6,7 @@ import { Person } from './star-war.type';
   standalone: true,
   template: `
     @if(info(); as person) {
-        <p>Id: {{ searchId() }} </p>
+        <p>Id: {{ person.id }} </p>
         <p>Name: {{ person.name }}</p>
         <p>Height: {{ person.height }}</p>
         <p>Mass: {{ person.mass }}</p>
@@ -22,5 +22,4 @@ import { Person } from './star-war.type';
 })
 export class CharacterInfoComponent {
     info = input<Person | undefined>(undefined);
-    searchId = input<number>();
 }

@@ -14,8 +14,9 @@ import { createRxResourceComputed } from './utils/resource-computed';
   template: `
     <h3>Display the 83 Star War Characters</h3>
     <div class="border">
-      <app-character-info [searchId]="id()" [info]="personMovies().person" />
-      <app-character-films [films]="personMovies().films" />
+      @let data = personMovies();
+      <app-character-info [info]="data.person" />
+      <app-character-films [films]="data.films" />
     </div>
     <app-character-picker (newSearchId)="id.set($event)" />  
   `,

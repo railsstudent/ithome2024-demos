@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injector, ResourceLoaderParams, runInInjectionContext } from '@angular/core';
-import { catchError, of } from 'rxjs';
+import { catchError, map, of } from 'rxjs';
 import { OptionalPersonFilmsTuple, Person } from '../star-war.type';
 import { getPersonMovies } from '../utils/get-person-movies.util';
 
@@ -14,6 +14,7 @@ export const personFilmsLoader = (injector: Injector) => {
             }
             return http.get<Person>(`${URL}/${params.request}`)
                 .pipe(
+                    map((p) => ({ ...p, id: params.request })),
                     getPersonMovies(http),
                     catchError((e) => {
                         console.error(e);
