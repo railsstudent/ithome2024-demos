@@ -25,7 +25,10 @@ export const personFilmsLoader = (injector: Injector) => {
     })
 }
   
-export const personFilmsComputed = (value: OptionalPersonFilmsTuple) => ({
-    person: value ? value[0] : undefined,
-    films: value ? value.slice(1) as string[] : [] as string[],
-});
+export const personFilmsComputed = (value: OptionalPersonFilmsTuple) => {
+    const [person, ...films] = value || [undefined, ...([] as string[]) ];
+    return { 
+        person,
+        films,
+    };
+}

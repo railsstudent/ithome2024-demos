@@ -15,8 +15,5 @@ export function createRxResourceComputed<R, T, W>(requestSignal: WritableSignal<
       injector
     });
   
-    return computed(() => {
-      const value = myResource.value();
-      return evaluateComputed(value)
-    });
+    return computed(() => evaluateComputed(myResource.value()));
 }
