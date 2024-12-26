@@ -1,6 +1,11 @@
 import { Chart } from 'chart.js/auto';
 
-export function initializeChart(canvas: HTMLCanvasElement, data: { year: number, count: number }[], backgroundColor: string) {
+export type ChartDataType = { 
+  year: number, 
+  count: number 
+}
+
+export function initializeChart(canvas: HTMLCanvasElement, data: ChartDataType[], backgroundColor: string) {
     return new Chart(canvas, 
       {
         type: 'bar',

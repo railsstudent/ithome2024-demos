@@ -1,7 +1,7 @@
 import { afterNextRender, afterRenderEffect, ChangeDetectionStrategy, Component, computed, ElementRef, signal, viewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import Chart from 'chart.js/auto';
-import { initializeChart } from './chart';
+import { ChartDataType, initializeChart } from './chart';
 import { genChartData } from './generate-chart-data';
 
 @Component({
@@ -37,7 +37,7 @@ export class AppComponent {
     { id: 'yellow', color: 'Yellow' }
   ]);
 
-  data = signal([
+  data = signal<ChartDataType[]>([
     { year: 2022, count: 30 },
     { year: 2023, count: 4 },
   ]);
@@ -61,7 +61,7 @@ export class AppComponent {
     afterRenderEffect({
       earlyRead: () => {
         const index = this.chartData();
-        return typeof index === 'undefined' ? undefined : { year: 2024 + index, count: Math.floor(Math.random() * 20) + 2 };
+        return typeof index === 'undefined' ? undefined : { year: 2024 + index, count: Math.floor(Math.random() * 20) + 2 } as ChartDataType;
       },
       write: (randomData) => {
         console.log('write is called');
